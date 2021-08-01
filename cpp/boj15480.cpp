@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-const int MAX_HGT = 18;
+const int MAX_HGT = 20;
 
 vector<vector<int>> G;
 vector<vector<int>> P(MAX_HGT);
@@ -12,7 +12,7 @@ void dfs(int cur, int p, int d) {
     P[0][cur] = p;
     D[cur] = d;
     for (int nx : G[cur]) {
-        if (nx != p) {
+        if (D[nx] == 0) {
             dfs(nx, cur, d + 1);
         }
     }
@@ -56,8 +56,8 @@ int get_lca(int u, int v) {
 }
 
 int main() {
-    freopen("./cpp/in", "r", stdin);
     ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
     int N, M;
     cin >> N;
     
@@ -72,7 +72,7 @@ int main() {
 
     // find parent
     for (int i = 0; i < MAX_HGT; i++) P[i].resize(N + 1);
-    D.resize(N + 1);
+    D.resize(N + 1, 0);
     dfs(1, 0, 1);
 
     // make lca array
@@ -88,26 +88,16 @@ int main() {
         int r, u, v;
         cin >> r >> u >> v;
 
-        int l0 = get_lca(u, v);
-        int d0 = D[u] - D[l0] + D[v] - D[l0];
-
-        int l1 = get_lca(r, u);
-        int d1 = D[r] - D[l1] + D[u] - D[l1];
-        int l2 = get_lca(r, v);
-        int d2 = D[r] - D[l2] + D[v] - D[l2];
-
+        int l1 = get_lca(u, v);
+        int l2 = get_lca(u, r);
+        int l3 = get_lca(v, r);
+        
         int ans = 0;
-        if (d0 == d1 + d2) {
-            ans = r;
-        }
-        else {
-            if (l0 == u || l0 == v) {
-                if (d1 < d2) ans = l1;
-                else ans = l2;
-            }
-            else {
-                
-            }
-        }
+        if (D[l1] > D[l2]) ans = l1;
+        else ans = l2;
+
+        if (D[ans] < D[l3]) ans = l3;
+
+        cout << ans << "\n";
     }
 }
