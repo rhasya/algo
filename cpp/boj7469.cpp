@@ -46,11 +46,14 @@ int main() {
             if (left % 2 == 1) {
                 auto it = lower_bound(tree[left].begin(), tree[left].end(), v);
                 ret += (it - tree[left].begin());
+                if (it != tree[left].end() && *it == v) ret++;
             }
             if (right % 2 == 0) {
                 auto it = lower_bound(tree[right].begin(), tree[right].end(), v);
                 ret += (it - tree[right].begin());
+                if (it != tree[right].end() && *it == v) ret++;
             }
+            
             left = (left + 1) / 2;
             right = (right - 1) / 2;
         }
@@ -62,16 +65,20 @@ int main() {
         cin >> i >> j >> k;
 
         // find smaller than mid
-        int l = -1e9, r = 1e9;
+        int l = (int)-1e9 - 1, r = (int)1e9;
         while (l < r) {
             int m = (l + r) / 2;
-            if (check(i, j, m) < k) {
-                l = m + 1;
+            if (m < 0) {
+                m = (l + r - 1) / 2;
             }
-            else {
+            int rslt = check(i, j, m);
+            if (rslt >= k) {
                 r = m;
             }
+            else {
+                l = m + 1;
+            }
         }
-        cout << r - 1 << '\n';
+        cout << r << '\n';
     }
 }

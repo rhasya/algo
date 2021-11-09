@@ -10,7 +10,7 @@ int main() {
 
     vector<int> A;
     for (int i = 1; i <= 100000; i++) {
-        A.push_back(i);
+        A.push_back(-i);
     }
     random_shuffle(A.begin(), A.end());
 
