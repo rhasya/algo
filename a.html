@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <meta charset="utf-8">
+  <script type="text/javascript">
+    // function handleClick() {
+    //   const result = document.querySelector('#result');
+    //   const input1 = document.querySelector('#input1');
+
+    //   result.textContent = 'Result: ' + input1.value;
+    // }
+    function handleKeypress(e) {
+      const result = document.querySelector('#result');
+      if (e.key === '1') {
+        result.textContent = 'Hello!!!';
+      }
+      else if (e.key === '2') {
+        result.textContent = '수현아 안녕!';
+      }
+    }
+  </script>
+<body onkeypress="handleKeypress(event)">
+  <!-- <input type="text" id="input1">
+  <button onclick="handleClick()">OK</button> -->
+  <p id="result">Result: </p>
+</body>
+</html>
